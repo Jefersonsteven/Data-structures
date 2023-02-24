@@ -1,67 +1,75 @@
-class BinarySearchTree {
+class Node {
   constructor(value) {
     this.value = value;
     this.left = null;
     this.right = null;
   }
+}
+
+class BinarySearchTree {
+  contructor() {
+    this.root = null;
+  }
 
   insert(value) {
-    const newNode = new BinarySearchTree(value);
-    // * si hay algo
-    // * si ese algo es mayor o menor
-
-    // * menor
-    if (value < this.value) {
-      if (!this.left) {
-        this.left = newNode;
-        return value;
-      } else {
-        this.left.insert(value);
+    const newNode = new Node(value);
+    if (!this.root) {
+      this.root = newNode;
+    } else {
+      let currentNode = this.root;
+      while(true) {
+        if(value.age < currentNode.value.age) {
+          if(!currentNode.left) {
+            currentNode.left = newNode;
+            return this;
+          }
+          currentNode = currentNode.left;
+        } else {
+          if(!currentNode.right) {
+            currentNode.right = newNode;
+            return this;
+          }
+          currentNode = currentNode.right;
+        }
+        
       }
     }
-    // * mayor
-    if (value > this.value) {
-      if (!this.right) {
-        this.right = newNode;
-        return value;
-      } else {
-        this.right.insert(value);
+  }
+
+  search(value) {
+    const newNode = new Node(value);
+    if (!this.root) {
+      this.root = newNode;
+    } else {
+      let currentNode = this.root;
+      while(true) {
+        if(value < currentNode.value.age) {
+          if(value === currentNode.value.age) {
+            return currentNode;
+          }
+          if(!currentNode.left) {
+            return false;
+          }
+          currentNode = currentNode.left;
+        } else {
+          if(value === currentNode.value.age) {
+            return currentNode;
+          }
+          if(!currentNode.right) {
+            return false;
+          }
+          currentNode = currentNode.right;
+        }
+        
       }
     }
-  }
-
-  size() {
-    // * return 1 + todo lo de la izquierda y lo de la derecha
-    let count = 1;
-    if (this.left) count += this.left.size();
-    if (this.right) count += this.right.size();
-    return count;
-  }
-
-  
-  // PRE-ORDER => NODO-IZQ-DER
-  // POST-ORDER => IZQ-DER-NODO
-  // IN ORDER => IZQ-NODO-DER
-  depthFirstForEach(cb) {
-    // * orden depthFirstForEach => post-order: I D N
-    this.left.depthFirstForEach(cb);
-    this.right.depthFirstForEach(cb);
-    cb(this.value);
-    // * orden depthFirstForEach => pre-orden: N I D
-    this.left.depthFirstForEach(cb);
-    this.right.depthFirstForEach(cb);
-    cb(this.value);
-  }
-
-  // BFS => TOP IZQ
-  breadFirstForEach(cb) {
-    // ! ejecute para actual
-    // ! guardara los nodos enlazados en una queue si estan. (el orden sera de izquierda a derecha)
-    // ! ejecuta siempre el primer en la queue
   }
 }
 
-const a = new BinarySearchTree(1);
-
-
-
+const tree = new BinarySearchTree;
+console.log(tree);
+tree.insert({name: 'Jeffer', age: 25});
+tree.insert({name: 'Johana', age: 34});
+tree.insert({name: 'Vanesa', age: 15});
+console.log(tree); 
+console.log(tree.search(25));
